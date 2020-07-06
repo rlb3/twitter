@@ -29,7 +29,17 @@ config :phoenix, :json_library, Jason
 
 config :twitter, :pow,
   user: Twitter.Users.User,
-  repo: Twitter.Repo
+  repo: Twitter.Repo,
+  web_module: TwitterWeb
+
+config :twitter, :pow_assent,
+  providers: [
+    github: [
+      client_id: System.get_env("CLIENT_ID"),
+      client_secret: System.get_env("CLIENT_SECRET"),
+      strategy: Assent.Strategy.Github
+    ]
+  ]
 
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
