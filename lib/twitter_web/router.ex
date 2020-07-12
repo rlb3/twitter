@@ -46,6 +46,12 @@ defmodule TwitterWeb.Router do
   scope "/", TwitterWeb do
     pipe_through [:browser, :protected]
 
+    live "/tweets", TweetLive.Index, :index, session: {__MODULE__, :get_current_user_id, []}
+    live "/tweets/new", TweetLive.Index, :new, session: {__MODULE__, :get_current_user_id, []}
+    live "/tweets/:id/edit", TweetLive.Index, :edit
+
+    live "/tweets/:id", TweetLive.Show, :show
+    live "/tweets/:id/show/edit", TweetLive.Show, :edit
   end
 
   scope "/" do
@@ -58,12 +64,6 @@ defmodule TwitterWeb.Router do
     pipe_through :browser
 
     live "/", PageLive, :index
-    live "/tweets", TweetLive.Index, :index, session: {__MODULE__, :get_current_user_id, []}
-    live "/tweets/new", TweetLive.Index, :new, session: {__MODULE__, :get_current_user_id, []}
-    live "/tweets/:id/edit", TweetLive.Index, :edit
-
-    live "/tweets/:id", TweetLive.Show, :show
-    live "/tweets/:id/show/edit", TweetLive.Show, :edit
   end
 
   # Other scopes may use custom stacks.

@@ -8,7 +8,6 @@ defmodule TwitterWeb.TweetLive.Index do
 
   @impl true
   def mount(_params, session, socket) do
-    IO.inspect(session, label: "session")
     user = get_current_user(session)
 
     socket =
