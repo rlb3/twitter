@@ -1,0 +1,22 @@
+<h1>Show Tweet</h1>
+
+<%= if @live_action in [:edit] do %>
+  <%= live_modal @socket, TwitterWeb.TweetLive.FormComponent,
+    id: @tweet.id,
+    title: @page_title,
+    action: @live_action,
+    tweet: @tweet,
+    return_to: Routes.tweet_show_path(@socket, :show, @tweet) %>
+<% end %>
+
+<ul>
+
+  <li>
+    <strong>Body:</strong>
+    <%= @tweet.body %>
+  </li>
+
+</ul>
+
+<span><%= live_patch "Edit", to: Routes.tweet_show_path(@socket, :edit, @tweet), class: "button" %></span>
+<span><%= live_redirect "Back", to: Routes.tweet_index_path(@socket, :index) %></span>

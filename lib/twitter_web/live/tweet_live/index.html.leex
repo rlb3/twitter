@@ -1,0 +1,36 @@
+<h1>Listing Tweets</h1>
+
+<%= inspect(@user) %>
+<%= if @live_action in [:new, :edit] do %>
+  <%= live_modal @socket, TwitterWeb.TweetLive.FormComponent,
+    id: @tweet.id || :new,
+    title: @page_title,
+    action: @live_action,
+    tweet: @tweet,
+    return_to: Routes.tweet_index_path(@socket, :index) %>
+<% end %>
+
+<table>
+  <thead>
+    <tr>
+      <th>Body</th>
+
+      <th></th>
+    </tr>
+  </thead>
+  <tbody id="tweets">
+    <%= for tweet <- @tweets do %>
+      <tr id="tweet-<%= tweet.id %>">
+        <td><%= tweet.body %></td>
+
+        <td>
+          <span><%= live_redirect "Show", to: Routes.tweet_show_path(@socket, :show, tweet) %></span>
+          <span><%= live_patch "Edit", to: Routes.tweet_index_path(@socket, :edit, tweet) %></span>
+          <span><%= link "Delete", to: "#", phx_click: "delete", phx_value_id: tweet.id, data: [confirm: "Are you sure?"] %></span>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<span><%= live_patch "New Tweet", to: Routes.tweet_index_path(@socket, :new) %></span>
