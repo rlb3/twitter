@@ -12,7 +12,7 @@ defmodule TwitterWeb.TweetLive.Index do
 
     socket =
       socket
-      |> assign(:tweets, list_tweets())
+      |> assign(:tweets, list_tweets(user))
       |> assign(:user, user)
 
     {:ok, socket}
@@ -46,11 +46,11 @@ defmodule TwitterWeb.TweetLive.Index do
     tweet = Tweets.get_tweet!(id)
     {:ok, _} = Tweets.delete_tweet(tweet)
 
-    {:noreply, assign(socket, :tweets, list_tweets())}
+    {:noreply, assign(socket, :tweets, list_tweets(socket.assigns.user))}
   end
 
-  defp list_tweets do
-    Tweets.list_tweets()
+  defp list_tweets(user) do
+    Tweets.list_tweets(user)
   end
 
   defp get_current_user(session) do

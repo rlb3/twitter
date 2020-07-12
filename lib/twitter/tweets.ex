@@ -17,8 +17,16 @@ defmodule Twitter.Tweets do
       [%Tweet{}, ...]
 
   """
-  def list_tweets do
-    Repo.all(Tweet)
+  def list_tweets(user) do
+    case user do
+      nil ->
+        []
+
+      user ->
+        user
+        |> Twitter.Repo.preload(:tweets)
+        |> Map.get(:tweets)
+    end
   end
 
   @doc """

@@ -6,7 +6,7 @@ defmodule Twitter.Tweets.Tweet do
   @foreign_key_type :binary_id
   schema "tweets" do
     field :body, :string
-    field :user_id, :binary_id
+    belongs_to :user, Twitter.Users.User
 
     timestamps()
   end

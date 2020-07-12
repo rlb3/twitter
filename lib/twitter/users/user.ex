@@ -8,6 +8,7 @@ defmodule Twitter.Users.User do
   schema "users" do
     pow_user_fields()
 
+    has_many :tweets, Twitter.Tweets.Tweet
     timestamps()
   end
 end
