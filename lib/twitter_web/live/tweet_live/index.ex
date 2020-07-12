@@ -55,7 +55,9 @@ defmodule TwitterWeb.TweetLive.Index do
   end
 
   defp get_current_user(session) do
-    user_id = session["user_id"]
-    Repo.get(User, user_id)
+    case session["user_id"] do
+      nil -> nil
+      user_id -> Repo.get(User, user_id)
+    end
   end
 end

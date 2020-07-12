@@ -59,7 +59,7 @@ defmodule TwitterWeb.Router do
 
     live "/", PageLive, :index
     live "/tweets", TweetLive.Index, :index, session: {__MODULE__, :get_current_user_id, []}
-    live "/tweets/new", TweetLive.Index, :new
+    live "/tweets/new", TweetLive.Index, :new, session: {__MODULE__, :get_current_user_id, []}
     live "/tweets/:id/edit", TweetLive.Index, :edit
 
     live "/tweets/:id", TweetLive.Show, :show

@@ -1,12 +1,12 @@
 <h1>Listing Tweets</h1>
 
-<%= inspect(@user) %>
 <%= if @live_action in [:new, :edit] do %>
   <%= live_modal @socket, TwitterWeb.TweetLive.FormComponent,
     id: @tweet.id || :new,
     title: @page_title,
     action: @live_action,
     tweet: @tweet,
+    user: @user,
     return_to: Routes.tweet_index_path(@socket, :index) %>
 <% end %>
 

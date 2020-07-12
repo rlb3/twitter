@@ -41,6 +41,7 @@ defmodule TwitterWeb.TweetLive.FormComponent do
   end
 
   defp save_tweet(socket, :new, tweet_params) do
+    tweet_params = Map.put(tweet_params, "user_id", socket.assigns.user.id)
     case Tweets.create_tweet(tweet_params) do
       {:ok, _tweet} ->
         {:noreply,
