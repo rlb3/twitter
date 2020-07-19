@@ -1,5 +1,6 @@
 defmodule TwitterWeb.TweetLive.Index do
   use TwitterWeb, :live_view
+  import Ecto.Query
 
   alias Twitter.Repo
   alias Twitter.Users.User
@@ -46,6 +47,14 @@ defmodule TwitterWeb.TweetLive.Index do
     tweet = Tweets.get_tweet!(id)
     {:ok, _} = Tweets.delete_tweet(tweet)
 
+    {:noreply, assign(socket, :tweets, list_tweets(socket.assigns.user))}
+  end
+
+  @impl true
+  def handle_event("like", %{"id" => id}, socket) do
+    IO.inspect(id)
+    from(t in Tweet, where: t.id == ^id, update: [inc: [likes: 1]])
+    |> Repo.update_all([])
     {:noreply, assign(socket, :tweets, list_tweets(socket.assigns.user))}
   end
 

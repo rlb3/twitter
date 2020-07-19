@@ -21,9 +21,10 @@
   <tbody id="tweets">
     <%= for tweet <- @tweets do %>
       <tr id="tweet-<%= tweet.id %>">
-        <td><%= tweet.body %></td>
+        <td><%= tweet.body %> (<%= tweet.likes %>)</td>
 
         <td>
+          <span><%= link "Like", to: "#", phx_click: "like", phx_value_id: tweet.id %></span>
           <span><%= live_redirect "Show", to: Routes.tweet_show_path(@socket, :show, tweet) %></span>
           <span><%= live_patch "Edit", to: Routes.tweet_index_path(@socket, :edit, tweet) %></span>
           <span><%= link "Delete", to: "#", phx_click: "delete", phx_value_id: tweet.id, data: [confirm: "Are you sure?"] %></span>
