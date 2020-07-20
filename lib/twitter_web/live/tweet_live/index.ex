@@ -1,6 +1,5 @@
 defmodule TwitterWeb.TweetLive.Index do
   use TwitterWeb, :live_view
-  import Ecto.Query
 
   alias Twitter.Repo
   alias Twitter.Users.User
@@ -52,9 +51,7 @@ defmodule TwitterWeb.TweetLive.Index do
 
   @impl true
   def handle_event("like", %{"id" => id}, socket) do
-    IO.inspect(id)
-    from(t in Tweet, where: t.id == ^id, update: [inc: [likes: 1]])
-    |> Repo.update_all([])
+    Tweets.increment_likes(id)
     {:noreply, assign(socket, :tweets, list_tweets(socket.assigns.user))}
   end
 

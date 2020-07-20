@@ -109,4 +109,11 @@ defmodule Twitter.Tweets do
   def change_tweet(%Tweet{} = tweet, attrs \\ %{}) do
     Tweet.changeset(tweet, attrs)
   end
+
+  def increment_likes(id) do
+    from(t in Tweet,
+      where: t.id == ^id,
+      update: [inc: [likes: 1]])
+    |> Repo.update_all([])
+  end
 end
